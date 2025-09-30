@@ -1,10 +1,26 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import Layout from "./layouts/Layout";
+import Landing from "./pages/Landing";
+import { ThemeProvider } from "./components/ThemeProvider";
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Landing />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
-    <>
-      <div className="text-red-400 text-4xl">Hello keshav here</div>
-    </>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 
