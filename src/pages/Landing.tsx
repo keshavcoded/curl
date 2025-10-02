@@ -69,7 +69,7 @@ const Landing = () => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (inputUrl) navigate(`/auth?createLink=${inputUrl}`);
+    if (inputUrl) navigate(`/auth/login?createLink=${inputUrl}`);
   }
 
   return (
@@ -101,7 +101,7 @@ const Landing = () => {
       <Accordion
         type="single"
         collapsible
-        className="w-full md:px-11 max-w-6xl"
+        className="mt-10 w-full md:px-11 max-w-6xl"
       >
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-sm sm:text-base">
