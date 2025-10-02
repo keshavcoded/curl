@@ -17,7 +17,7 @@ const Header = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  const user = true;
+  const user = false;
 
   return (
     <nav className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backfrop-filter]:bg-background/60 z-50">
@@ -28,11 +28,12 @@ const Header = () => {
               <img
                 src={
                   theme === "dark"
-                    ? "./curl-dark-logo.png"
-                    : "curl-light-logo.png"
+                    ? "/curl-dark-logo.png"
+                    : "/curl-light-logo.png"
                 }
                 alt="curl-logo"
                 className="w-13 sm:w-21 m-3 sm:h-7"
+                draggable="false"
               />
             </Link>
           </div>
@@ -40,7 +41,7 @@ const Header = () => {
           <div className="flex gap-x-4">
             <ModeToggle />
             {!user ? (
-              <Button onClick={() => navigate("/auth")}>Login</Button>
+              <Button onClick={() => navigate("/auth/login")} className="cursor-pointer">Login</Button>
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
