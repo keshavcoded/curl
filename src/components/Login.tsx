@@ -7,6 +7,7 @@ import Error from "./Error";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { FormDataTypes } from "@/lib/types";
 import * as zod from "zod";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { theme } = useTheme();
@@ -127,6 +128,15 @@ const Login = () => {
                 "Sign in with Google"
               )}
             </Button>
+            <p className="text-center text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to={"/signup"}
+                className="text-blue-600 hover:underline"
+              >
+                Sign up
+              </Link>
+            </p>
           </form>
         </div>
       </div>
