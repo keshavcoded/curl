@@ -5,6 +5,8 @@ import Landing from "./pages/Landing";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Dashboard from "./pages/Dashboard";
+import AppProvider from "./context";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
     ],
   },
 ]);
@@ -34,7 +40,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
     </ThemeProvider>
   );
 }
