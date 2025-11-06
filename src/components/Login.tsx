@@ -4,19 +4,26 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { PulseLoader } from "react-spinners";
 import Error from "./Error";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import type { FormDataTypes } from "@/lib/types";
 import * as zod from "zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useFetch } from "@/hooks/useFetch";
+import { login } from "@/lib/api/auth.api";
+import { useAppContext } from "@/useAppContext";
 
 const Login = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const primaryUrl = searchParams.get("createLink");
 
   const [formData, setFormData] = useState<FormDataTypes>({
     email: "",
     password: "",
   });
-  const [error, setError] = useState<{ [key: string]: string }>({});
+  const [formError, setFormError] = useState<{ [key: string]: string }>({});
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,9 +33,19 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const { data, error, loading, fn: loginFn } = useFetch(login);
+  const { fetchuser } = useAppContext();
+
+  useEffect(() => {
+    if (error === null && data) {
+      navigate(`/dashboard? ${primaryUrl ? `createLink=${primaryUrl}` : ""}`);
+      fetchuser();
+    }
+  }, [data, error]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError({});
+    setFormError({});
     try {
       const loginDataSchema = zod.object({
         email: zod.email({ message: "Invalid Email" }),
@@ -49,16 +66,18 @@ const Login = () => {
           errorObj[pathkey] = issue.message;
         });
 
-        setError(errorObj);
+        setFormError(errorObj);
+
+        return;
       }
+      //login api call
+      await loginFn(formData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.error(e);
       }
     }
   };
-
-  const loading = false;
 
   return (
     <div>
@@ -76,7 +95,7 @@ const Login = () => {
             : "shadow-xl"
         }  flex flex-col justify-center items-center text-center py-12 sm:px-4 lg:px-6 rounded-xl mt-5`}
       >
-        <Error message={""} position="top-4" />
+        <Error message={error} position="top-4" />
         <div className="w-full px-5">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="relative">
@@ -92,7 +111,9 @@ const Login = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              {error.email && <Error message={error.email} position="left-1" />}
+              {formError.email && (
+                <Error message={formError.email} position="left-1" />
+              )}
             </div>
             <div className="relative">
               <div className="relative rounded-md shadow-sm">
@@ -107,8 +128,8 @@ const Login = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              {error.password && (
-                <Error message={error.password} position="left-1" />
+              {formError.password && (
+                <Error message={formError.password} position="left-1" />
               )}
             </div>
             <Button
@@ -130,10 +151,7 @@ const Login = () => {
             </Button>
             <p className="text-center text-sm text-gray-600">
               Don't have an account?{" "}
-              <Link
-                to={"/signup"}
-                className="text-blue-600 hover:underline"
-              >
+              <Link to={"/signup"} className="text-blue-600 hover:underline">
                 Sign up
               </Link>
             </p>
