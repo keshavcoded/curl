@@ -12,4 +12,13 @@ export const login = async ({ email, password }: LoginParams) => {
   });
 
   if (error) throw new Error(error.message);
+
+  return data;
+};
+
+export const getCurrentUser = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (!data.session) return null;
+  if (error) throw new Error(error.message);
+  return data.session?.user;
 };
