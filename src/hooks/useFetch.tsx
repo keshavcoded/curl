@@ -1,28 +1,26 @@
 import { useState } from "react";
 
-type FetchOptions = Record<string, unknown>;
+/* type FetchOptions = Record<string, unknown>; */
 
-export function useFetch<TResponse>(
-  cb: (options: FetchOptions, ...args: unknown[]) => Promise<TResponse>,
+export function useFetch<TArgs = void, TResponse = unknown>(
+  cb: (args: TArgs) => Promise<TResponse>
 
-  options: FetchOptions = {}
+  /* options: FetchOptions = {} */
 ) {
   const [data, setData] = useState<TResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const fn = async (...args: unknown[]) => {
+  const fn = async (args: TArgs) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await cb(options, ...args);
+      const response = await cb(args);
       setData(response);
       setError("");
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error);
-      }
+      if (error instanceof Error) setError(error.message);
     } finally {
       setLoading(false);
     }
