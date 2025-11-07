@@ -41,7 +41,7 @@ const Login = () => {
       navigate(`/dashboard? ${primaryUrl ? `createLink=${primaryUrl}` : ""}`);
       fetchuser();
     }
-  }, [data, error]);
+  }, [data, error, fetchuser, navigate, primaryUrl]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
