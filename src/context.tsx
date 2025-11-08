@@ -2,6 +2,7 @@ import { createContext, useEffect, type ReactNode } from "react";
 import { useFetch } from "./hooks/useFetch";
 import { getCurrentUser } from "./lib/api/auth.api";
 import type { AppContextTypes } from "./lib/types";
+import supabase from "./db/supabase";
 
 const AppContext = createContext<AppContextTypes | null>(null);
 
@@ -17,7 +18,16 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchuser();
-  }, []);
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) fetchuser();
+      //TODO:logout reset if needed
+    });
+
+    return () => subscription.unsubscribe();
+  }, [fetchuser]);
 
   return (
     <AppContext.Provider
