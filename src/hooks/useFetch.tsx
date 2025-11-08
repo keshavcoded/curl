@@ -11,14 +11,13 @@ export function useFetch<TArgs = void, TResponse = unknown>(
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fn = async (args: TArgs) => {
+  const fn = async (args?: TArgs) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await cb(args);
+      const response = await cb(args as TArgs);
       setData(response);
-      setError("");
     } catch (error) {
       if (error instanceof Error) setError(error.message);
     } finally {

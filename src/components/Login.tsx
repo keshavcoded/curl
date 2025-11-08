@@ -9,7 +9,7 @@ import type { FormDataTypes } from "@/lib/types";
 import * as zod from "zod";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useFetch } from "@/hooks/useFetch";
-import { login } from "@/lib/api/auth.api";
+import { login, loginWithGoogle } from "@/lib/api/auth.api";
 import { useAppContext } from "@/useAppContext";
 
 const Login = () => {
@@ -142,6 +142,7 @@ const Login = () => {
             <Button
               className="w-full cursor-pointer"
               disabled={loading ? true : false}
+              onClick={loginWithGoogle}
             >
               {loading ? (
                 <PulseLoader size={6} color="#ffff" />
