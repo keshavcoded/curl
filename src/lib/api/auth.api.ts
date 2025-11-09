@@ -1,4 +1,4 @@
-import supabase, { supabaseUrl } from "@/db/supabase";
+import supabase from "@/db/supabase";
 import type { FormDataTypes, SignupProps } from "../types";
 
 export const login = async ({ email, password }: FormDataTypes) => {
@@ -49,20 +49,15 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const signup = async ({
-  name,
-  email,
-  password,
-  profile_img,
-}: SignupProps) => {
+export const signup = async ({ name, email, password }: SignupProps) => {
   try {
-    const filename = `img-${name.split(" ")[0]}-${Math.random()}`;
+    /* const filename = `img-${name.split(" ")[0]}-${Math.random()}`;
 
     const { error: uploadError } = await supabase.storage
       .from("profile_img")
       .upload(filename, profile_img);
 
-    if (uploadError) throw new Error(uploadError.message); //TODO: add react hot toast
+    if (uploadError) throw new Error(uploadError.message); //TODO: add react hot toast */
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -70,7 +65,6 @@ export const signup = async ({
       options: {
         data: {
           name,
-          profile_img: `${supabaseUrl}/storage/v1/public/profile_img/${filename}`,
         },
       },
     });
