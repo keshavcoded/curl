@@ -37,7 +37,7 @@ const AuthCallBack = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center text-lg font-medium">
-      Loggin you with Google...
+      Signing you with Google...
     </div>
   );
 };
