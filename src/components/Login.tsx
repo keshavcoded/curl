@@ -11,6 +11,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useFetch } from "@/hooks/useFetch";
 import { login, loginWithGoogle } from "@/lib/api/auth.api";
 import { useAppContext } from "@/useAppContext";
+import { FcGoogle } from "react-icons/fc";
+import { motion } from "motion/react";
 
 const Login = () => {
   const { theme } = useTheme();
@@ -80,7 +82,11 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
       <h1
         className={`text-2xl sm:text-3xl font-bold text-center mt-20 ${
           theme === "dark" ? "text-neutral-300" : "text-neutral-700"
@@ -140,6 +146,7 @@ const Login = () => {
               {loading ? <PulseLoader size={6} color="#ffff" /> : "Login"}
             </Button>
             <Button
+              type="button"
               className="w-full cursor-pointer"
               disabled={loading ? true : false}
               onClick={loginWithGoogle}
@@ -149,17 +156,21 @@ const Login = () => {
               ) : (
                 "Sign in with Google"
               )}
+              <FcGoogle />
             </Button>
             <p className="text-center text-sm text-gray-600">
               Don't have an account?{" "}
-              <Link to={"/signup"} className="text-blue-600 hover:underline">
+              <Link
+                to={"/auth/signup"}
+                className="text-blue-600 hover:underline"
+              >
                 Sign up
               </Link>
             </p>
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
