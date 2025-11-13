@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 
 const features = [
   {
@@ -74,9 +75,14 @@ const Landing = () => {
 
   return (
     <div className="m-10 flex flex-col items-center">
-      <h2 className="my-10 sm:my-16 text-3xl sm:text-4xl lg:text-5xl text-center font-bold">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="my-10 sm:my-16 text-3xl sm:text-4xl lg:text-5xl text-center font-bold"
+      >
         Shorten, Share, and Track Your Links Effortlessly.
-      </h2>
+      </motion.h2>
       <form
         action="submit"
         className="flex flex-col sm:h-12 sm:flex-row w-full md:w-2/4 gap-2 "
