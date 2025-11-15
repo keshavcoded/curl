@@ -1,9 +1,9 @@
 import { Lock, Mail, User2 } from "lucide-react";
-import { useTheme } from "./ThemeProvider";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { useTheme } from "../components/ThemeProvider";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
 import { PulseLoader } from "react-spinners";
-import Error from "./Error";
+import Error from "../components/Error";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import type { FormDataTypes } from "@/lib/types";
 import * as zod from "zod";
@@ -65,7 +65,7 @@ const Signup = () => {
         const errorObj: Record<string, string> = {};
 
         result.error.issues.forEach((issue) => {
-          const pathkey = issue.path[0];
+          const pathkey = String(issue.path[0]);
           errorObj[pathkey] = issue.message;
         });
 
