@@ -21,6 +21,17 @@ const Signup = () => {
 
   const primaryUrl = searchParams.get("createLink");
 
+  const {
+    fetchuser,
+    isAuthenticated,
+    loading: contextLoader,
+  } = useAppContext();
+
+  useEffect(() => {
+    if (isAuthenticated && !contextLoader)
+      navigate(`/dashboard?${primaryUrl ? `createNew=${primaryUrl}` : ""}`);
+  }, [isAuthenticated, contextLoader, navigate, primaryUrl]);
+
   const [formData, setFormData] = useState<FormDataTypes>({
     name: "",
     email: "",
@@ -37,7 +48,7 @@ const Signup = () => {
   };
 
   const { data, error, loading, fn: signupFn } = useFetch(signup);
-  const { fetchuser } = useAppContext();
+  
 
   useEffect(() => {
     if (error === null && data) {

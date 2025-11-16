@@ -18,8 +18,17 @@ const Login = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const primaryUrl = searchParams.get("createLink");
+  const {
+    fetchuser,
+    isAuthenticated,
+    loading: contextLoader,
+  } = useAppContext();
+
+  useEffect(() => {
+    if (isAuthenticated && !contextLoader)
+      navigate(`/dashboard?${primaryUrl ? `createNew=${primaryUrl}` : ""}`);
+  }, [isAuthenticated, contextLoader, navigate, primaryUrl]);
 
   const [formData, setFormData] = useState<FormDataTypes>({
     email: "",
@@ -36,7 +45,6 @@ const Login = () => {
   };
 
   const { data, error, loading, fn: loginFn } = useFetch(login);
-  const { fetchuser } = useAppContext();
 
   useEffect(() => {
     if (error === null && data) {
