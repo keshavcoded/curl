@@ -78,3 +78,8 @@ export const signup = async ({ name, email, password }: SignupProps) => {
     }
   }
 };
+
+export const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
+};
