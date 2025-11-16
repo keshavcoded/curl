@@ -1,3 +1,5 @@
+import type { User } from "@supabase/supabase-js";
+
 export type FormDataTypes = {
   name?: string;
   email: string;
@@ -11,7 +13,7 @@ export type SignupProps = {
 };
 
 export type AppContextTypes = {
-  user: unknown;
+  user: User | null;
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
