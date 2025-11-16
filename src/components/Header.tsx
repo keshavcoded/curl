@@ -12,12 +12,20 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Link2, LogOut, User } from "lucide-react";
+import { useAppContext } from "@/useAppContext";
+import { useFetch } from "@/hooks/useFetch";
+import { logout } from "@/lib/api/auth.api";
+import { BeatLoader } from "react-spinners";
 
 const Header = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  const user = false;
+  const { user, fetchuser } = useAppContext();
+
+  /* console.log(user?.user_metadata); */
+
+  const { loading, fn: logoutFn } = useFetch(logout);
 
   return (
     <nav className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backfrop-filter]:bg-background/60 z-50">
@@ -41,26 +49,45 @@ const Header = () => {
           <div className="flex gap-x-4">
             <ModeToggle />
             {!user ? (
-              <Button onClick={() => navigate("/auth/login")} className="cursor-pointer">Login</Button>
+              <Button
+                onClick={() => navigate("/auth/login")}
+                className="cursor-pointer"
+              >
+                Login
+              </Button>
             ) : (
               <DropdownMenu>
-                <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
+                <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden cursor-pointer">
                   <Avatar>
                     <AvatarImage src="" />
-                    <AvatarFallback>A</AvatarFallback>
+                    <AvatarFallback>
+                      {loading ? (
+                        <BeatLoader color="#888" size={1} />
+                      ) : (
+                        user?.user_metadata?.name?.charAt(0)?.toUpperCase()
+                      )}
+                    </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel className="flex justify-center items-center">
+                  <DropdownMenuLabel className="flex items-center cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
-                    My Account
+                    {user?.user_metadata?.name}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="">
+                  <DropdownMenuItem className="cursor-pointer">
                     <Link2 className="mr-2 h-4 w-4" />
                     My Links
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-500">
+                  <DropdownMenuItem
+                    className="text-red-500 cursor-pointer"
+                    onClick={() => {
+                      logoutFn().then(() => {
+                        fetchuser();
+                        navigate("/");
+                      });
+                    }}
+                  >
                     <LogOut className="mr-2 h-4 w-4 text-red-500" />
                     Logout
                   </DropdownMenuItem>
