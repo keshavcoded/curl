@@ -1,6 +1,7 @@
 import { useTheme } from "@/components/ThemeProvider";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 const Layout = () => {
   const { theme } = useTheme();
@@ -12,6 +13,7 @@ const Layout = () => {
           : "selection:text-white selection:bg-black"
       }`}
     >
+      <Toaster position="bottom-center" reverseOrder={true} />
       <main className="min-h-screen">
         <Header />
         <Outlet />
