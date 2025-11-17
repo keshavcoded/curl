@@ -13,3 +13,12 @@ export async function getUrls(user_id: string | undefined) {
 
   return data;
 }
+
+export async function deleteUrls(id: string) {
+  const { data, error } = await supabase.from("urls").delete().eq("id", id);
+  if (error) {
+    console.error(error.message);
+    throw new Error("Error while deleting urls");
+  }
+  return data;
+}
