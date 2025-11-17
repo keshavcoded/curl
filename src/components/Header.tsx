@@ -62,7 +62,7 @@ const Header = () => {
                     <AvatarImage src="" />
                     <AvatarFallback>
                       {loading ? (
-                        <BeatLoader color="#888" size={1} />
+                        <BeatLoader color="#888" size={5} />
                       ) : (
                         user?.user_metadata?.name?.charAt(0)?.toUpperCase()
                       )}
