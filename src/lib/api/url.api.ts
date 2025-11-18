@@ -1,4 +1,5 @@
-import supabase from "@/db/supabase";
+import supabase, { supabaseUrl } from "@/db/supabase";
+import type { createUrlTypes } from "../types";
 
 export async function getUrls(user_id: string | undefined) {
   const { data, error } = await supabase
@@ -20,5 +21,50 @@ export async function deleteUrls(id: string) {
     console.error(error.message);
     throw new Error("Error while deleting urls");
   }
+  return data;
+}
+
+export async function createUrl(
+  { title, primary_url, custom_url, user_id }: createUrlTypes,
+  qrcode: string
+) {
+  const short_url = Math.random().toString(36).substring(2, 6);
+  const fileName = `QR-${short_url}`;
+
+  const blob = await fetch(qrcode).then((res) => res.blob());
+
+  const { error: storageError } = await supabase.storage
+    .from("qr_code")
+    .upload(fileName, blob, {
+      contentType: "image/png",
+      upsert: true,
+    });
+
+  if (storageError) {
+    console.error(storageError);
+    throw new Error(storageError.message);
+  }
+
+  const qr = `${supabaseUrl}/storage/v1/object/public/qr_code/${fileName}`;
+
+  const { data, error } = await supabase
+    .from("urls")
+    .insert([
+      {
+        title,
+        primary_url,
+        custom_url: custom_url || null,
+        user_id,
+        short_url,
+        qrcode: qr,
+      },
+    ])
+    .select();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Error while creating url");
+  }
+
   return data;
 }
