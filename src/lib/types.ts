@@ -13,7 +13,7 @@ export type SignupProps = {
 };
 
 export type AppContextTypes = {
-  user: User | null;
+  user: User | null | undefined;
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
@@ -29,4 +29,15 @@ export type UrlTypes = {
   qrcode: string;
   user_id: string;
   created_at: string;
+};
+export type creatLinkInputTypes = {
+  title: string;
+  primaryUrl: string;
+  customUrl?: string;
+};
+export type createUrlTypes = {
+  title: string;
+  primary_url: string;
+  custom_url?: string;
+  user_id: string | undefined;
 };
