@@ -29,7 +29,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (isAuthenticated && !contextLoader)
-      navigate(`/dashboard?${primaryUrl ? `createNew=${primaryUrl}` : ""}`);
+      navigate(`/dashboard?${primaryUrl ? `createLink=${primaryUrl}` : ""}`);
   }, [isAuthenticated, contextLoader, navigate, primaryUrl]);
 
   const [formData, setFormData] = useState<FormDataTypes>({
@@ -52,7 +52,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (error === null && data) {
-      navigate(`/dashboard? ${primaryUrl ? `createLink=${primaryUrl}` : ""}`);
+      navigate(`/dashboard?${primaryUrl ? `createLink=${primaryUrl}` : ""}`);
       fetchuser();
     }
   }, [data, error, fetchuser, navigate, primaryUrl]);
