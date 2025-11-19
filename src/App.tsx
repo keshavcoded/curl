@@ -9,7 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import AppProvider from "./context";
 import AuthCallBack from "./pages/AuthCallBack";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import CreateLink from "./components/CreateLink";
+import RedirectLink from "./pages/RedirectLink";
+import ViewLink from "./pages/ViewLink";
 
 const router = createBrowserRouter([
   {
@@ -48,9 +49,13 @@ const router = createBrowserRouter([
         path: "/link/:id",
         element: (
           <ProtectedRoute>
-            <CreateLink />
+            <ViewLink />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/:id",
+        element: <RedirectLink />,
       },
     ],
   },
