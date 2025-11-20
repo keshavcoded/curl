@@ -3,7 +3,7 @@ import LinkCard from "@/components/LinkCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useFetch } from "@/hooks/useFetch";
-import { getAnalytics } from "@/lib/api/analytics.api";
+import { getOverallAnalytics } from "@/lib/api/analytics.api";
 import { getUrls } from "@/lib/api/url.api";
 import { useAppContext } from "@/useAppContext";
 import { Filter } from "lucide-react";
@@ -23,7 +23,7 @@ const Dashboard = () => {
     data: analytics,
     loading: analyticsLoading,
     fn: analyticsFn,
-  } = useFetch(getAnalytics);
+  } = useFetch(getOverallAnalytics);
 
   useEffect(() => {
     if (urls?.length) {

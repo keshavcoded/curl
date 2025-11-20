@@ -1,5 +1,6 @@
 import { useFetch } from "@/hooks/useFetch";
-import { getAnalytics, getRedirect } from "@/lib/api/url.api";
+import { getRedirect } from "@/lib/api/url.api";
+import { getAnalytics } from "@/lib/api/analytics.api";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { SkewLoader } from "react-spinners";

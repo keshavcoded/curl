@@ -1,6 +1,5 @@
 import supabase, { supabaseUrl } from "@/db/supabase";
 import type { createUrlTypes } from "../types";
-import { UAParser } from "ua-parser-js";
 
 export async function getUrls(user_id: string | undefined) {
   const { data, error } = await supabase
@@ -84,33 +83,23 @@ export async function getRedirect(id: string | undefined) {
   return data;
 }
 
-const parser = new UAParser();
-
-export async function getAnalytics({
+export async function getUrlwithId({
   id,
-  primaryUrl,
+  user_id,
 }: {
   id: string;
-  primaryUrl: string;
+  user_id: string;
 }) {
-  try {
-    const res = parser.getResult();
-    const device = res.device.type || "desktop";
+  const { data, error } = await supabase
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id);
 
-    const response = await fetch("https://ipapi.co/json");
-    const { city, country_name: country } = await response.json();
-
-    await supabase.from("analytics").insert({
-      url_id: id,
-      city: city,
-      device: device,
-      country: country,
-    });
-
-    window.location.href = primaryUrl;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
+  if (error) {
+    console.log(error.message);
+    throw new Error("Error while fetching link/ not found");
   }
+
+  return data;
 }
