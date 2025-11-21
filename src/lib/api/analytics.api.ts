@@ -45,3 +45,17 @@ export async function getAnalytics({
     }
   }
 }
+
+export async function getAnalyticsById(url_id: string | undefined) {
+  const { data, error } = await supabase
+    .from("analytics")
+    .select("*")
+    .eq("url_id", url_id);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Error while fetching the analytics");
+  }
+
+  return data;
+}
