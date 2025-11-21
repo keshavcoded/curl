@@ -59,10 +59,7 @@ const Login = () => {
     try {
       const loginDataSchema = zod.object({
         email: zod.email({ message: "Invalid Email" }),
-        password: zod
-          .string()
-          .min(1, "Password is required")
-          .min(6, "Password must be min 6 characters"),
+        password: zod.string().min(1, "Password is required"),
       });
       const result = loginDataSchema.safeParse(formData);
 
