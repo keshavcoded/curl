@@ -47,7 +47,9 @@ const LinkCard = ({
         <span className="text-md text-blue-500 font-semibold">
           https://curl.in/{url?.custom_url ? url?.custom_url : url.short_url}
         </span>
-        <span>{url?.primary_url}</span>
+        <span className="break-all block truncate max-w-[300px] sm:max-w-[400px]">
+          {url?.primary_url}
+        </span>
         <span className="flex items-end font-extralight text-sm flex-1">
           {new Date(url?.created_at).toLocaleString()}
         </span>
