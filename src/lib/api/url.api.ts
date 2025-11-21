@@ -87,14 +87,17 @@ export async function getUrlwithId({
   id,
   user_id,
 }: {
-  id: string;
-  user_id: string;
+  id: string | undefined;
+  user_id: string | undefined;
 }) {
   const { data, error } = await supabase
     .from("urls")
     .select("*")
     .eq("id", id)
-    .eq("user_id", user_id);
+    .eq("user_id", user_id)
+    .single();
+
+  console.log("url data: ", data);
 
   if (error) {
     console.log(error.message);
