@@ -57,7 +57,9 @@ const Dashboard = () => {
               <CardTitle>Total Visits</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">{analytics?.length}</p>
+              <p className="text-3xl font-bold">
+                {analytics ? analytics.length : "0"}
+              </p>
             </CardContent>
           </Card>
         </div>
