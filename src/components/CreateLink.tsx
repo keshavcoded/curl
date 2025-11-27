@@ -99,7 +99,7 @@ const CreateLink = () => {
       }}
     >
       <DialogTrigger>
-        <Button>Create Link</Button>
+        <Button className="cursor-pointer">Create Link</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -140,7 +140,7 @@ const CreateLink = () => {
         <DialogFooter>
           <Button
             disabled={loading}
-            className="w-full mt-5"
+            className="w-full mt-5 cursor-pointer"
             onClick={handleSubmit}
           >
             {loading ? <BeatLoader size={10} color="#888" /> : "Create Link"}
