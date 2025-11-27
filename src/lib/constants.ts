@@ -3,26 +3,32 @@ export const FOOTER_CONTENT = {
     {
       title: "PRODUCT",
       links: [
-        { text: "How It Works", url: "#works" },
-        { text: "Features", url: "#features" },
+        { text: "How It Works", url: "#" },
+        { text: "Features", url: "#" },
         { text: "Try now", url: "#" },
       ],
     },
     {
       title: "SUPPORT & RESOURCES",
       links: [
-        { text: "Contact Us", url: "/contact" },
-        { text: "FAQs", url: "/faq" },
-        { text: "Feedback", url: "/feedback" },
+        {
+          text: "Contact Us",
+          url: "https://discordapp.com/users/1183793546239688825",
+        },
+        { text: "FAQs", url: "#" },
+        { text: "Feedback", url: "#" },
       ],
     },
     {
       title: "CONNECT WITH DEV",
       links: [
-        { text: "X", url: "#" },
-        { text: "LinkedIn", url: "#" },
-        { text: "Discord", url: "#" },
-        { text: "GitHub", url: "#" },
+        { text: "X", url: "https://x.com/keshavcoded" },
+        { text: "LinkedIn", url: "https://linkedin.com/in/keshavshri" },
+        {
+          text: "Discord",
+          url: "https://discordapp.com/users/1183793546239688825",
+        },
+        { text: "GitHub", url: "https://github.com/keshavcoded" },
       ],
     },
   ],
