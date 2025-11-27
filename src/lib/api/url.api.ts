@@ -74,7 +74,7 @@ export async function getRedirect(id: string | undefined) {
     .from("urls")
     .select("id,primary_url")
     .or(`short_url.eq.${id}, custom_url.eq.${id}`)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.log(error.message);
