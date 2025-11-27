@@ -110,6 +110,7 @@ const Landing = () => {
         className="mt-10 w-full md:px-11 max-w-6xl"
       >
         <AccordionItem value="item-1">
+         <h1 className="text-center font-medium text-md md:text-lg mb-2">FAQs</h1>
           <AccordionTrigger className="text-sm sm:text-base">
             How does our URL shortener simplify links?
           </AccordionTrigger>
