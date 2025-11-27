@@ -41,3 +41,10 @@ export type createUrlTypes = {
   custom_url?: string;
   user_id: string | undefined;
 };
+
+export type locationAnalyticsType = {
+  city: string;
+};
+export type deviceAnalyticsType = {
+  device: string;
+};
