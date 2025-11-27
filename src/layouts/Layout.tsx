@@ -2,6 +2,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
 
 const Layout = () => {
   const { theme } = useTheme();
@@ -18,7 +19,7 @@ const Layout = () => {
         <Header />
         <Outlet />
       </main>
-      <footer className="p-10 text-center mt-10">Made by Keshav</footer>
+      <Footer />
     </div>
   );
 };
