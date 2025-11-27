@@ -127,7 +127,7 @@ const CreateLink = () => {
           <Error message={formError.primaryUrl} position="left-2 top-9" />
         </div>
         <div className="relative flex items-center gap-2">
-          <Card className="px-2 py-2 text-sm">curl.in</Card> /
+          <Card className="px-2 py-2 text-sm">{import.meta.env.VITE_DNS_NAME}</Card> /
           <Input
             name="customUrl"
             placeholder="Custom URL"

@@ -85,11 +85,11 @@ const ViewLink = () => {
         <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
           <span className="text-2xl font-bold">{url?.title}</span>
           <a
-            href={`https://curl.in/${link}`}
+            href={`https://${import.meta.env.VITE_DNS_NAME}/${link}`}
             target="_blank"
             className="text-md sm:text-lg text-blue-500 font-bold hover:underline cursor-pointer"
           >
-            https://curl.in/{link}
+            https://{import.meta.env.VITE_DNS_NAME}/{link}
           </a>
           <a
             href={url?.primary_url}
@@ -114,7 +114,11 @@ const ViewLink = () => {
                 className="cursor-pointer"
                 onClick={() =>
                   navigator.clipboard
-                    .writeText(`https://curl.in/${url?.short_url}`)
+                    .writeText(
+                      `https://${import.meta.env.VITE_DNS_NAME}/${
+                        url?.short_url
+                      }`
+                    )
                     .then(() =>
                       toast("Link copied to clipboard", {
                         icon: <CopyCheck />,

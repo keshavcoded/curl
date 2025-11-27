@@ -45,7 +45,8 @@ const LinkCard = ({
       <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 gap-1">
         <span className="text-xl font-bold">{url?.title}</span>
         <span className="text-md text-blue-500 font-semibold">
-          https://curl.in/{url?.custom_url ? url?.custom_url : url.short_url}
+          https://{import.meta.env.VITE_DNS_NAME}/
+          {url?.custom_url ? url?.custom_url : url.short_url}
         </span>
         <span className="break-all block truncate max-w-[300px] sm:max-w-[400px]">
           {url?.primary_url}
@@ -60,7 +61,9 @@ const LinkCard = ({
           className="cursor-pointer"
           onClick={() =>
             navigator.clipboard
-              .writeText(`https://curl.in/${url?.short_url}`)
+              .writeText(
+                `https://${import.meta.env.VITE_DNS_NAME}/${url?.short_url}`
+              )
               .then(() =>
                 toast("Link copied to clipboard", {
                   icon: <CopyCheck />,
