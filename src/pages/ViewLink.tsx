@@ -1,4 +1,4 @@
-import { Device } from "@/components/Analytics";
+import { Device } from "@/components/Device";
 import Location from "@/components/Location";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
