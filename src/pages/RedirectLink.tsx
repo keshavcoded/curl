@@ -16,28 +16,33 @@ const RedirectLink = () => {
   const { loading: analyticsloader, fn: saveAnalytics } =
     useFetch(getAnalytics);
 
+  const [hasFetched, sethasFetched] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!loading) redirect(id);
-  }, []);
+    if (!id) return;
+
+    const run = async () => {
+      await redirect(id);
+      sethasFetched(true);
+    };
+
+    run();
+  }, [id]);
 
   useEffect(() => {
-    if (!loading) {
-      if (!data) {
-        setNotFound(true);
-      }
-    }
-  }, [loading, data]);
+    if (!hasFetched) return;
 
-  useEffect(() => {
-    if (!loading && data) {
-      saveAnalytics({
-        id: data?.id,
-        primaryUrl: data?.primary_url,
-      });
+    if (!data) {
+      setNotFound(true);
+      return;
     }
-  }, [loading]);
+
+    saveAnalytics({
+      id: data?.id,
+      primaryUrl: data?.primary_url,
+    });
+  }, [hasFetched, data]);
 
   if (loading || analyticsloader) {
     return (
