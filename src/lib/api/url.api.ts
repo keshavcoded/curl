@@ -74,13 +74,13 @@ export async function getRedirect(id: string | undefined) {
     .from("urls")
     .select("id,primary_url")
     .or(`short_url.eq.${id}, custom_url.eq.${id}`)
-    .maybeSingle();
+    .single();
 
   if (error) {
     console.log(error.message);
     throw new Error("Error while redirecting");
   }
-  return data;
+  return {data, error};
 }
 
 export async function getUrlwithId({
