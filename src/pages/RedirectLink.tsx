@@ -11,38 +11,33 @@ const RedirectLink = () => {
 
   const { theme } = useTheme();
 
-  const { loading, data, fn: redirect } = useFetch(getRedirect);
+  const { loading, data, fn: redirect, error } = useFetch(getRedirect);
 
   const { loading: analyticsloader, fn: saveAnalytics } =
     useFetch(getAnalytics);
 
-  const [hasFetched, sethasFetched] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!id) return;
-
-    const run = async () => {
-      await redirect(id);
-      sethasFetched(true);
-    };
-
-    run();
-  }, [id]);
+    if (!loading) redirect(id);
+  }, []);
 
   useEffect(() => {
-    if (!hasFetched) return;
-
-    if (!data) {
-      setNotFound(true);
-      return;
+    if (!loading) {
+      if (!data) {
+        setNotFound(true);
+      }
     }
+  }, [loading, data]);
 
-    saveAnalytics({
-      id: data?.id,
-      primaryUrl: data?.primary_url,
-    });
-  }, [hasFetched, data]);
+  useEffect(() => {
+    if (!loading && data) {
+      saveAnalytics({
+        id: data?.data.id,
+        primaryUrl: data?.data.primary_url,
+      });
+    }
+  }, [loading]);
 
   if (loading || analyticsloader) {
     return (
@@ -52,7 +47,7 @@ const RedirectLink = () => {
     );
   }
 
-  if (notFound) {
+  if (notFound && error) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <h1
