@@ -20,6 +20,7 @@ const RedirectLink = () => {
 
   useEffect(() => {
     if (!loading) redirect(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const RedirectLink = () => {
         primaryUrl: data?.data.primary_url,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   if (loading || analyticsloader) {
